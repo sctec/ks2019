@@ -78,7 +78,13 @@
             <td>{{$value.pro_name}}</td>
             <td>{{$value.pro_num}}</td>
             <td>{{$value.user_score}}</td>
-            <td>{{$value.user_record}}</td>
+            <td>
+                {{if $value.user_record==1}}
+                <p style="color: red;font-weight: bolder;font-size: 14px;">☆ 破纪录 ☆</p>
+                {{else}}
+                <p>未破纪录</p>
+                {{/if}}
+            </td>
             <td class="td-manage">
                 <a title="编辑"
                    onclick="x_admin_show('编辑','{{__HOST__}}/admin/M100/M100-edit?id={{@$value._id}}',600,400)"
