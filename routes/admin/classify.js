@@ -34,7 +34,7 @@ router.post("/M100-add", async (ctx) => {
         let pro_start_time = ctx.request.body.pro_start_time;
         let pro_hold = ctx.request.body.pro_hold;
         let addResult = await DB.insert("projects", {
-            "pro_type": "F100",
+            "pro_type": "M100",
             "pro_name": pro_name,
             "pro_identification": pro_identification,
             "pro_state": parseInt(0),
@@ -232,7 +232,7 @@ router.post("/M1000-add", async (ctx) => {
         let pro_hold = ctx.request.body.pro_hold;
         var pro_var = 'M1000';
         let addResult = await DB.insert("projects", {
-            "pro_type": "F100",
+            "pro_type": "M1000",
             "pro_name": pro_name,
             "pro_identification": pro_identification,
             "pro_state": parseInt(0),
@@ -331,7 +331,7 @@ router.post("/F800-add", async (ctx) => {
         let pro_hold = ctx.request.body.pro_hold;
         console.log(pro_start_time);
         let addResult = await DB.insert("projects", {
-            "pro_type": "F100",
+            "pro_type": "F800",
             "pro_name": pro_name,
             "pro_identification": pro_identification,
             "pro_state": parseInt(0),
