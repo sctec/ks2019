@@ -25,7 +25,7 @@ router.post('/', async (ctx) => {
             let pro_id = pro_result[i]._id;
             let pro_man = pro_result[i].pro_man;
             let pro_now_num = parseInt(pro_result[i].pro_now_num);
-            let pro_hold = parseFloat(pro_result[i].pro_hold);
+            var pro_hold = parseFloat(pro_result[i].pro_hold);
             console.log(pro_hold);
             //做更改
             pro_man.push(ctx.state.G.userinfo2.stu_id);
@@ -54,7 +54,7 @@ router.post('/', async (ctx) => {
             "pro_name": bm_pro_name,
             "pro_num": parseInt(pro_num),
             "pro_id": Math.floor(Math.random() * 999999),
-            "pro_hold": pro_hold,
+            "pro_hold": parseFloat(pro_hold),
         });
         if (result) {
             ctx.session.userinfo2.bm_state = parseInt(1);
