@@ -29,7 +29,7 @@ router.post('/', async (ctx) => {
             console.log(pro_hold);
             //做更改
             pro_man.push(ctx.state.G.userinfo2.stu_id);
-            pro_now_num = pro_man + 1;
+            pro_now_num = pro_man.length + 1;
             pro_num = parseInt(pro_result[i].pro_now_num);
             if (parseInt(pro_result[i].pro_now_num) == parseInt(pro_result[i].pro_max_num)) {
                 pro_full_state == parseInt(1);
