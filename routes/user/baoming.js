@@ -29,8 +29,8 @@ router.post('/', async (ctx) => {
             console.log(pro_hold);
             //做更改
             pro_man.push(ctx.state.G.userinfo2.stu_id);
-            pro_now_num = parseInt(pro_man.length) + 1;
-            pro_num = parseInt(pro_result[i].pro_now_num);
+            pro_now_num = parseInt(pro_man.length);
+            var thepro_num = parseInt(pro_now_num);
             if (parseInt(pro_result[i].pro_now_num) == parseInt(pro_result[i].pro_max_num)) {
                 pro_full_state == parseInt(1);
             }
@@ -52,7 +52,7 @@ router.post('/', async (ctx) => {
             "class": theclass,
             "bm_state": parseInt(1),
             "pro_name": bm_pro_name,
-            "pro_num": parseInt(pro_num),
+            "pro_num": parseInt(thepro_num),
             "pro_id": Math.floor(Math.random() * 999999),
             "pro_hold": parseFloat(pro_hold),
         });
