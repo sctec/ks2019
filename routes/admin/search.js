@@ -30,7 +30,7 @@ router.post('/class-search', async (ctx) => {
 router.get("/stuid-search", async (ctx) => {
     try {
         ctx.render('admin/search', {
-            bc: "stu_id",
+            bc: "stuid",
             bcname: "按学号查找"
         });
     } catch (e) {
