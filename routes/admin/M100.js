@@ -21,7 +21,6 @@ router.get("/", async (ctx) => {
     });
 });
 
-
 router.post("/M100-search", async (ctx) => {
     try {
         let pro_name = ctx.request.body.pro_name;
@@ -43,7 +42,6 @@ router.post("/M100-search", async (ctx) => {
     }
 });
 
-
 router.get("/M100-edit", async (ctx) => {
     try {
         let id = ctx.query.id;
@@ -59,19 +57,15 @@ router.get("/M100-edit", async (ctx) => {
 
 router.post('/M100-doedit', async (ctx) => {
     try {
-        console.log("aaa");
         let id = ctx.request.body.id;
-        let stu_id = ctx.request.body.stu_id;
-        let name = ctx.request.body.name;
         let user_score = parseFloat(ctx.request.body.user_score);
+        console.log(user_score);
         let charesult = DB.find("users", {"_id": DB.getObjectId(id)});
         if (user_score < charesult[0].pro_hold) {
             var user_record = parseInt(1);
         }
 
         let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
-            "stu_id": stu_id,
-            "name": name,
             "user_score": user_score,
             "user_record": user_record
         });
