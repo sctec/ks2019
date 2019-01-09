@@ -66,7 +66,7 @@ router.post('/M100-doedit', async (ctx) => {
         let user_score = parseFloat(ctx.request.body.user_score);
         let charesult = DB.find("users", {"_id": DB.getObjectId(id)});
         if (user_score < charesult[0].pro_hold) {
-            user_record = parseInt(1);
+            var user_record = parseInt(1);
         }
 
         let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {

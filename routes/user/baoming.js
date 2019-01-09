@@ -25,6 +25,7 @@ router.post('/', async (ctx) => {
             let pro_id = pro_result[i]._id;
             let pro_man = pro_result[i].pro_man;
             let pro_now_num = parseInt(pro_result[i].pro_now_num);
+            let pro_hold = parseFloat(pro_result[i].pro_hold);
             //做更改
             pro_man.push(ctx.state.G.userinfo2.stu_id);
             pro_now_num = pro_man + 1;
@@ -38,7 +39,7 @@ router.post('/', async (ctx) => {
                 "pro_man": pro_man,
                 "pro_now_num": parseInt(pro_now_num),
                 "pro_full_state": parseInt(pro_full_state),
-                "pro_hold": parseFloat(pro_result[i].pro_hold),
+                "pro_hold": parseFloat(pro_hold),
             });
             break;
         }
