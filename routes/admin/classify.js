@@ -329,7 +329,6 @@ router.post("/F800-add", async (ctx) => {
         let pro_max_num = ctx.request.body.pro_max_num;
         let pro_start_time = ctx.request.body.pro_start_time;
         let pro_hold = ctx.request.body.pro_hold;
-        console.log(pro_start_time);
         let addResult = await DB.insert("projects", {
             "pro_type": "F800",
             "pro_name": pro_name,
