@@ -29,7 +29,6 @@ router.post('/', async (ctx) => {
             pro_man.push(ctx.state.G.userinfo2.stu_id);
             pro_now_num = pro_man + 1;
             pro_num = parseInt(pro_result[i].pro_now_num);
-
             if (parseInt(pro_result[i].pro_now_num) == parseInt(pro_result[i].pro_max_num)) {
                 pro_full_state == parseInt(1);
             }
@@ -39,6 +38,7 @@ router.post('/', async (ctx) => {
                 "pro_man": pro_man,
                 "pro_now_num": parseInt(pro_now_num),
                 "pro_full_state": parseInt(pro_full_state),
+                "pro_hold": parseFloat(pro_result[i].pro_hold),
             });
             break;
         }

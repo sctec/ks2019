@@ -42,6 +42,7 @@ router.post('/doregister', async (ctx) => {
             "user_record": parseInt(0),  //个人记录
             "college": "",//学院
             "class": "",//班级
+            "pro_hold": parseFloat(-1),
         });
         // console.log(addResult.ops[0]);
         if (addResult) {

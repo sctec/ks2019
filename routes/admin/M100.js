@@ -63,12 +63,17 @@ router.post('/M100-doedit', async (ctx) => {
         let id = ctx.request.body.id;
         let stu_id = ctx.request.body.stu_id;
         let name = ctx.request.body.name;
-        let user_score = ctx.request.body.user_score;
-        console.log(id);
+        let user_score = parseFloat(ctx.request.body.user_score);
+        let charesult = DB.find("users", {"_id": DB.getObjectId(id)});
+        if (user_score < charesult[0].pro_hold) {
+            user_record = parseInt(1);
+        }
+
         let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
             "stu_id": stu_id,
             "name": name,
             "user_score": user_score,
+            "user_record": user_record
         });
         ctx.body = "修改成功";
     } catch (e) {
