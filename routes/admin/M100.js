@@ -58,10 +58,9 @@ router.get("/M100-edit", async (ctx) => {
 router.post('/M100-doedit', async (ctx) => {
     try {
         let id = ctx.request.body.id;
-        let user_score = parseFloat(ctx.request.body.user_score);
-        console.log(user_score);
-        let charesult = DB.find("users", {"_id": DB.getObjectId(id)});
-        if (user_score < charesult[0].pro_hold) {
+        let user_score = ctx.request.body.user_score;
+        let charesult =await DB.find("users", {"_id": DB.getObjectId(id)});
+        if (parseFloat(user_score) < charesult[0].pro_hold) {
             var user_record = parseInt(1);
         }
 
