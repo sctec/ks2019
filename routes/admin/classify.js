@@ -3,7 +3,6 @@ const DB = require("../../model/db.js");
 const tools = require("../../model/tools.js");
 
 router.get("/M100", async (ctx) => {
-    console.log("dvdv");
     var page = 1;
     var pageSize = 100;
     var result = await DB.find('projects', {"pro_type": "M100"}, {}, {
@@ -35,10 +34,13 @@ router.post("/M100-add", async (ctx) => {
         let pro_start_time = ctx.request.body.pro_start_time;
         let pro_hold = ctx.request.body.pro_hold;
         let addResult = await DB.insert("projects", {
-            "pro_type": "M100",
+            "pro_type": "F100",
             "pro_name": pro_name,
             "pro_identification": pro_identification,
             "pro_state": parseInt(0),
+            "pro_now_num": parseInt(0),
+            "pro_man": [],
+            "pro_full_state": parseInt(0),
             "pro_max_num": parseInt(pro_max_num),
             "pro_hold": parseFloat(pro_hold),
             "pro_start_time": pro_start_time,
@@ -230,10 +232,13 @@ router.post("/M1000-add", async (ctx) => {
         let pro_hold = ctx.request.body.pro_hold;
         var pro_var = 'M1000';
         let addResult = await DB.insert("projects", {
-            "pro_type": pro_var,
+            "pro_type": "F100",
             "pro_name": pro_name,
             "pro_identification": pro_identification,
             "pro_state": parseInt(0),
+            "pro_now_num": parseInt(0),
+            "pro_man": [],
+            "pro_full_state": parseInt(0),
             "pro_max_num": parseInt(pro_max_num),
             "pro_hold": parseFloat(pro_hold),
             "pro_start_time": pro_start_time,
@@ -326,10 +331,13 @@ router.post("/F800-add", async (ctx) => {
         let pro_hold = ctx.request.body.pro_hold;
         console.log(pro_start_time);
         let addResult = await DB.insert("projects", {
-            "pro_type": "F800",
+            "pro_type": "F100",
             "pro_name": pro_name,
             "pro_identification": pro_identification,
             "pro_state": parseInt(0),
+            "pro_now_num": parseInt(0),
+            "pro_man": [],
+            "pro_full_state": parseInt(0),
             "pro_max_num": parseInt(pro_max_num),
             "pro_hold": parseFloat(pro_hold),
             "pro_start_time": pro_start_time,
