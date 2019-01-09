@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>田径运动会管理系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="{{__HOST__}}/admin/css/font.css">
+    <link rel="stylesheet" href="{{__HOST__}}/admin/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{__HOST__}}/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="{{__HOST__}}/admin/js/xadmin.js"></script>
+    <style>
+        .zhuce {
+            float: right;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .zhuce > a {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body class="login-bg">
+
+<div class="login">
+    <div class="message">田径运动会管理系统</div>
+    <div id="darkbannerwrap"></div>
+
+    <form action="{{__HOST__}}/admin/login/dologin" method="post" class="layui-form">
+        <input name="stu_id" placeholder="学号" type="text" lay-verify="required" class="layui-input">
+        <hr class="hr15">
+        <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+        <hr class="hr15">
+        <p class="zhuce"><a href="{{__HOST__}}/admin/register">注册</a></p>
+        <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+        <hr class="hr20">
+    </form>
+</div>
+<script src="{{__HOST__}}/admin/basic.js"></script>
+
+<!-- 底部结束 -->
+</body>
+</html>

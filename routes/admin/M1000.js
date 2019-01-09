@@ -1,0 +1,79 @@
+const router = require("koa-router")();
+const DB = require("../../model/db.js");
+const tools = require("../../model/tools.js");
+
+router.get("/", async (ctx) => {
+    let page = ctx.query.page || 1;
+    let pageSize = 15;
+    let count = await DB.count("users", {"sys_user": 0, "sex": "男", "bm_state": parseInt(1), "pro_type": "M1000"});
+    let result = await DB.find("users", {"sys_user": 0, "sex": "男", "bm_state": parseInt(1), "pro_type": "M1000"}, {}, {
+        page: page,
+        pageSize: pageSize,
+        sortJson: {"created_at": 1}
+    });
+    let classifyresult = await DB.find("projects", {"pro_type": "M1000", "pro_state": 1});
+    await ctx.render("admin/M1000/M1000-list", {
+        list: result,
+        listNum: count,
+        classify: classifyresult,
+        page: page,
+        totalPages: Math.ceil(count / pageSize)
+    });
+});
+
+
+router.post("/M1000-search", async (ctx) => {
+    try {
+        let pro_name = ctx.request.body.pro_name;
+        console.log(pro_name);
+        // console.log(state);
+        let searchResult = await DB.find("users", {"pro_name": pro_name,});
+        let classifyresult = await DB.find("projects", {"pro_type": "M1000"});
+        console.log(classifyresult);
+        await ctx.render("admin/M1000/M1000-list", {
+            listNum: searchResult.length,
+            list: searchResult,
+            classify: classifyresult,
+        });
+    } catch (err) {
+        ctx.body = {
+            code: 401,
+            message: "添加失败"
+        }
+    }
+});
+
+
+router.get("/M1000-edit", async (ctx) => {
+    try {
+        let id = ctx.query.id;
+        let result = await DB.find("users", {"_id": DB.getObjectId(id)});
+        await ctx.render('admin/M1000/M1000-edit', {
+            list: result[0],
+        });
+    } catch (e) {
+        ctx.body = "页面出错";
+    }
+
+});
+
+router.post('/M1000-doedit', async (ctx) => {
+    try {
+        console.log("aaa");
+        let id = ctx.request.body.id;
+        let stu_id = ctx.request.body.stu_id;
+        let name = ctx.request.body.name;
+        let user_score = ctx.request.body.user_score;
+        console.log(id);
+        let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
+            "stu_id": stu_id,
+            "name": name,
+            "user_score": user_score,
+        });
+        ctx.body = "修改成功";
+    } catch (e) {
+        ctx.body = "修改失败";
+    }
+});
+
+module.exports = router.routes();

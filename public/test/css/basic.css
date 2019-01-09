@@ -1,0 +1,32 @@
+body,div,a,p{
+	margin:0;
+	padding:0;
+}
+
+.background{
+	background:url(../img/图片.png);
+	background-size: cover;
+	max-width:6rem;
+	text-align: center;
+	margin:0 auto;
+   overflow: hidden;
+}
+.clearfloat{
+	zoom:1;
+}
+.clearfloat:after{
+	display: block;
+	clear:both;
+	content:"";
+	visibility: hidden;
+	height:0;
+}
+.public-container
+{
+	
+    margin:0 auto;
+    max-width:6rem; 
+}
+html{
+	font-size: 625%;
+}
