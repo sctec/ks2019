@@ -9,7 +9,7 @@ router.get("/", async (ctx) => {
     let result = await DB.find("users", {"sys_user": 0, "sex": "女", "bm_state": parseInt(1), "pro_type": "F800"}, {}, {
         page: page,
         pageSize: pageSize,
-        sortJson: {"created_at": 1}
+        sortJson: {"user_score": 1}
     });
     let classifyresult = await DB.find("projects", {"pro_type": "F800", "pro_state": 1});
     await ctx.render("admin/F800/F800-list", {

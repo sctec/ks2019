@@ -36,7 +36,7 @@
     <div id="darkbannerwrap"></div>
 
     <form action="{{__HOST__}}/admin/login/dologin" method="post" class="layui-form">
-        <input name="stu_id" placeholder="学号" type="text" lay-verify="required" class="layui-input">
+        <input name="stu_id" placeholder="学号" type="text" lay-verify="stu_id" class="layui-input">
         <hr class="hr15">
         <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
         <hr class="hr15">
@@ -45,6 +45,25 @@
         <hr class="hr20">
     </form>
 </div>
+
+<script>
+    layui.use(['form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer;
+
+        //自定义验证规则
+        form.verify({
+            stu_id: function (value) {
+                if (value.length != 10) {
+                    return '输入学号位数不对，请重新输入';
+                }
+            },
+        });
+
+
+    });
+</script>
 <script src="{{__HOST__}}/admin/basic.js"></script>
 
 <!-- 底部结束 -->

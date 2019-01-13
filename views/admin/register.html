@@ -24,24 +24,61 @@
     <div id="darkbannerwrap"></div>
 
     <form action="{{__HOST__}}/admin/register/doregister" method="post" class="layui-form">
-        <input name="stu_id" placeholder="学号" type="text" lay-verify="required" class="layui-input">
+        <input name="stu_id" placeholder="学号" type="text" lay-verify="stu_id" class="layui-input">
         <hr class="hr15">
-        <input name="name" placeholder="姓名" type="text" lay-verify="required" class="layui-input">
+        <input name="name" placeholder="姓名" type="text" lay-verify="name" class="layui-input">
         <hr class="hr15">
         <p>
         <p>性别：</p>
-        <input name="sex" value="男" placeholder="性别" type="radio" lay-verify="required" title="男" class="layui-input">
-        <input name="sex" value="女" placeholder="性别" type="radio" lay-verify="required" title="女" class="layui-input">
+        <input name="sex" value="男" placeholder="性别" type="radio" lay-verify="sex" title="男" class="layui-input">
+        <input name="sex" value="女" placeholder="性别" type="radio" lay-verify="sex" title="女" class="layui-input">
         </p>
         <hr class="hr15">
-        <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+        <input id="password" name="password" lay-verify="password" placeholder="密码" type="password" class="layui-input">
         <hr class="hr15">
-        <input name="repassword" lay-verify="required" placeholder="确认密码" type="password" class="layui-input">
+        <input name="repassword" lay-verify="repassword" placeholder="确认密码" type="password" class="layui-input">
         <hr class="hr15">
         <input value="注册" lay-submit lay-filter="login" style="width:100%;" type="submit">
         <hr class="hr20">
     </form>
 </div>
+<script>
+    layui.use(['form', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer;
+
+        //自定义验证规则
+        form.verify({
+            stu_id: function (value) {
+                if (value.length != 10) {
+                    return '输入学号位数不对，请重新输入';
+                }
+            },
+            name: function (value) {
+                if (value.length == 0) {
+                    return '请输入姓名';
+                }
+                if (value.length <= 1 || value.length >= 8) {
+                    return "请输入真实姓名";
+                }
+            },
+            password: function (value) {
+                if (value.length < 6) {
+                    return '密码必须大于6位';
+                }
+            },
+            repassword: function (value) {
+                var password = $("#password").val();
+                if (value != password) {
+                    return '两次密码输入不一致';
+                }
+            }
+        });
+
+
+    });
+</script>
 <script src="{{__HOST__}}/admin/basic.js"></script>
 
 <!-- 底部结束 -->
