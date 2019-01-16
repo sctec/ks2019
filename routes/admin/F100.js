@@ -12,7 +12,7 @@ router.get("/", async (ctx) => {
         sortJson: {"user_score": 1}
     });
     for (i = 0; i < result.length; i++) {
-        let stu_id_update = result[0].stu_id;
+        let stu_id_update = result[i].stu_id;
         let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
             "user_paiming": i + 1,
         });
@@ -85,7 +85,7 @@ router.post('/F100-doedit', async (ctx) => {
             sortJson: {"user_score": 1}
         });
         for (i = 0; i < result.length; i++) {
-            let stu_id_update = result[0].stu_id;
+            let stu_id_update = result[i].stu_id;
             let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
                 "user_paiming": i + 1,
             });
