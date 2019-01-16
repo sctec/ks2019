@@ -38,7 +38,7 @@ router.post('/doregister', async (ctx) => {
             "pro_name": "",     //比赛标识
             "pro_id": parseInt(-1),       //比赛编号
             "pro_num": parseInt(-1),    //比赛赛道
-            "user_score": null, //比赛成绩
+            "user_score": parseFloat(999999), //比赛成绩
             "user_record": parseInt(0),  //个人记录
             "college": "",//学院
             "class": "",//班级
