@@ -64,6 +64,7 @@
             <th>比赛分组</th>
             <th>比赛赛道</th>
             <th>比赛成绩</th>
+            <th>比赛排名</th>
             <th>比赛记录</th>
             <th>操作</th>
         </tr>
@@ -78,6 +79,7 @@
             <td>{{$value.pro_name}}</td>
             <td>{{$value.pro_num}}</td>
             <td>{{$value.user_score}}</td>
+            <td>{{$value.user_paiming}}</td>
             <td>
                 {{if $value.user_record==1}}
                 <p style="color: red;font-weight: bolder;font-size: 14px;">☆ 破纪录 ☆</p>
