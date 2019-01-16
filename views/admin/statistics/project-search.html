@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>田径运动会管理系统</title>
+    <title>欢迎使用</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -33,17 +33,21 @@
         </a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-       href="{{__HOST__}}/admin/search/class-search" title="刷新">
+       href="{{__HOST__}}/admin/F100" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
     <div class="layui-row">
-        <form action="{{__HOST__}}/admin/search/{{bc}}-search" method="post" class="layui-form layui-col-md12 x-so">
+        <form action="{{__HOST__}}/admin/statistics/project-search" method="post"
+              class="layui-form layui-col-md12 x-so">
             <div class="layui-input-inline">
-                <input placeholder="{{bcname}}" type="text" id="parameter" name="parameter" required=""
-                       lay-verify="name"
-                       autocomplete="off"
-                       class="layui-input">
+                <select id="pro_type" class="layui-input" name="pro_type" lay-filter="aihao">
+                    <option value="">分类查找</option>
+                    <option value="M100">男子100米</option>
+                    <option value="F100">女子100米</option>
+                    <option value="M1000">男子1000米</option>
+                    <option value="F800">女子800米</option>
+                </select>
             </div>
             <!--<input type="text" name="classify"  placeholder="请输入用户名" autocomplete="off" class="layui-input">-->
             <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -57,7 +61,6 @@
         <tr>
             <th>学号</th>
             <th>姓名</th>
-            <th>学院</th>
             <th>班级</th>
             <th>比赛编号</th>
             <th>比赛分组</th>
@@ -72,7 +75,6 @@
         <tr id="layerDemo">
             <td>{{$value.stu_id}}</td>
             <td>{{$value.name}}</td>
-            <td>{{$value.college}}</td>
             <td>{{$value.class}}</td>
             <td>{{$value.pro_id}}</td>
             <td>{{$value.pro_name}}</td>
