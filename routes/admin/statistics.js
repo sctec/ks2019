@@ -27,7 +27,6 @@ router.get("/project-stat", async (ctx) => {
         list.push(m1000Object);
         list.push(f100Object);
         list.push(f800Object);
-        console.log(list);
         ctx.render('admin/statistics/project-list', {
             list: list,
         });
@@ -48,31 +47,26 @@ router.post('/project-search', async (ctx) => {
         ctx.body = "查找失败";
     }
 });
-// router.get("/stuid-search", async (ctx) => {
-//     try {
-//         ctx.render('admin/search', {
-//             bc: "stuid",
-//             bcname: "按学号查找"
-//         });
-//     } catch (e) {
-//         ctx.body = "页面出错";
-//     }
-//
-// });
-// router.post('/stuid-search', async (ctx) => {
-//     try {
-//         let parameter = ctx.request.body.parameter;
-//         let searchResult = await DB.find("users", {"stu_id": parameter});
-//         await ctx.render("admin/search", {
-//             listNum: searchResult.length || 0,
-//             list: searchResult,
-//             bc: "stuid",
-//             bcname: "按学号查找"
-//         });
-//     } catch (e) {
-//         ctx.body = "查找失败";
-//     }
-// });
+router.get("/class-stat", async (ctx) => {
+    try {
+        ctx.render('admin/statistics/class-search');
+    } catch (e) {
+        ctx.body = "页面出错";
+    }
+
+});
+router.post('/class-search', async (ctx) => {
+    try {
+        let parameter = ctx.request.body.parameter;
+        let searchResult = await DB.find("users", {"class": parameter,"user_record":parseInt(1)});
+        await ctx.render('admin/statistics/class-search', {
+            listNum: searchResult.length || 0,
+            list: searchResult,
+        });
+    } catch (e) {
+        ctx.body = "查找失败";
+    }
+});
 // router.get("/name-search", async (ctx) => {
 //     try {
 //         ctx.render('admin/search', {
