@@ -39,8 +39,8 @@ router.get("/project-stat", async (ctx) => {
 router.post('/project-search', async (ctx) => {
     try {
         let pro_type = ctx.request.body.pro_type;
-        let searchResult = await DB.find("users", {"pro_type": pro_type});
-        await ctx.render("admin/project-search", {
+        let searchResult = await DB.find("users", {"pro_type": pro_type,"user_record": parseInt(1)});
+        await ctx.render("admin/statistics/project-search", {
             listNum: searchResult.length || 0,
             list: searchResult,
         });
