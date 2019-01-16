@@ -9,6 +9,7 @@ const F100 = require("./admin/F100.js");
 const F800 = require("./admin/F800.js");
 const M1000 = require("./admin/M1000.js");
 const search = require("./admin/search.js");
+const statistics = require("./admin/statistics");
 const url = require("url");
 
 router.use(async (ctx, next) => {
@@ -47,6 +48,8 @@ router.use("/M100", M100);
 router.use("/F100", F100);
 router.use("/M1000", M1000);
 router.use("/F800", F800);
+
 router.use("/search", search);
+router.use("/statistics", statistics);
 
 module.exports = router.routes();

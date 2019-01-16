@@ -11,6 +11,12 @@ router.get("/", async (ctx) => {
         pageSize: pageSize,
         sortJson: {"user_score": 1}
     });
+    for (i = 0; i < result.length; i++) {
+        let stu_id_update = result[i].stu_id;
+        let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
+            "user_paiming": i + 1,
+        });
+    }
     let classifyresult = await DB.find("projects", {"pro_type": "F800", "pro_state": 1});
     await ctx.render("admin/F800/F800-list", {
         list: result,
@@ -64,6 +70,17 @@ router.post('/F800-doedit', async (ctx) => {
         let charesult = await DB.find("users", {"_id": DB.getObjectId(id)});
         if (parseFloat(user_score) < charesult[0].pro_hold) {
             var user_record = parseInt(1);
+        }
+        let result = await DB.find("users", {"sys_user": 0, "sex": "女", "bm_state": parseInt(1), "pro_type": "F800"}, {}, {
+            page: page,
+            pageSize: pageSize,
+            sortJson: {"user_score": 1}
+        });
+        for (i = 0; i < result.length; i++) {
+            let stu_id_update = result[i].stu_id;
+            let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
+                "user_paiming": i + 1,
+            });
         }
         let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
             "user_score": user_score,

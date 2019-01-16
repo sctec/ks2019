@@ -70,10 +70,7 @@ router.post('/F100-doedit', async (ctx) => {
         if (parseFloat(user_score) < charesult[0].pro_hold) {
             var user_record = parseInt(1);
         }
-        let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
-            "user_score": parseFloat(user_score),
-            "user_record": user_record
-        });
+
         let result = await DB.find("users", {
             "sys_user": 0,
             "sex": "女",
@@ -90,6 +87,10 @@ router.post('/F100-doedit', async (ctx) => {
                 "user_paiming": i + 1,
             });
         }
+        let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
+            "user_score": parseFloat(user_score),
+            "user_record": user_record
+        });
         ctx.body = "修改成功";
     } catch (e) {
         ctx.body = "修改失败";
