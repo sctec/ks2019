@@ -38,11 +38,12 @@ router.post('/doregister', async (ctx) => {
             "pro_name": "",     //比赛标识
             "pro_id": parseInt(-1),       //比赛编号
             "pro_num": parseInt(-1),    //比赛赛道
-            "user_score": parseFloat(0), //比赛成绩
+            "user_score": null, //比赛成绩
             "user_record": parseInt(0),  //个人记录
             "college": "",//学院
             "class": "",//班级
             "pro_hold": parseFloat(-1),
+            "user_paiming": parseInt(-1),//比赛排名
         });
         // console.log(addResult.ops[0]);
         if (addResult) {

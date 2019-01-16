@@ -11,6 +11,12 @@ router.get("/", async (ctx) => {
         pageSize: pageSize,
         sortJson: {"user_score": 1}
     });
+    for (i = 0; i < result.length; i++) {
+        let stu_id_update = result[0].stu_id;
+        let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
+            "user_paiming": i + 1,
+        });
+    }
     let classifyresult = await DB.find("projects", {"pro_type": "F100", "pro_state": 1});
     await ctx.render("admin/F100/F100-list", {
         list: result,
@@ -20,7 +26,6 @@ router.get("/", async (ctx) => {
         totalPages: Math.ceil(count / pageSize)
     });
 });
-
 
 router.post("/F100-search", async (ctx) => {
     try {
@@ -69,6 +74,22 @@ router.post('/F100-doedit', async (ctx) => {
             "user_score": parseFloat(user_score),
             "user_record": user_record
         });
+        let result = await DB.find("users", {
+            "sys_user": 0,
+            "sex": "女",
+            "bm_state": parseInt(1),
+            "pro_type": "F100"
+        }, {}, {
+            page: page,
+            pageSize: pageSize,
+            sortJson: {"user_score": 1}
+        });
+        for (i = 0; i < result.length; i++) {
+            let stu_id_update = result[0].stu_id;
+            let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
+                "user_paiming": i + 1,
+            });
+        }
         ctx.body = "修改成功";
     } catch (e) {
         ctx.body = "修改失败";

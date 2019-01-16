@@ -11,6 +11,7 @@ router.get("/", async (ctx) => {
         pageSize: pageSize,
         sortJson: {"user_score": 1}
     });
+
     let classifyresult = await DB.find("projects", {"pro_type": "M100", "pro_state": 1});
     await ctx.render("admin/M100/M100-list", {
         list: result,
@@ -59,14 +60,14 @@ router.post('/M100-doedit', async (ctx) => {
     try {
         let id = ctx.request.body.id;
         let user_score = ctx.request.body.user_score;
-        let charesult =await DB.find("users", {"_id": DB.getObjectId(id)});
+        let charesult = await DB.find("users", {"_id": DB.getObjectId(id)});
         if (parseFloat(user_score) < charesult[0].pro_hold) {
             var user_record = parseInt(1);
         }
 
         let updateResult = await DB.update('users', {"_id": DB.getObjectId(id)}, {
-            "user_score": user_score,
-            "user_record": user_record
+            "user_score": parseFloat(user_score),
+            "user_record": parseInt(user_record)
         });
         ctx.body = "修改成功";
     } catch (e) {
