@@ -1,6 +1,8 @@
 const router = require("koa-router")();
 const DB = require("../../model/db.js");
 const tools = require("../../model/tools.js");
+const fs = require('fs');
+const XLSX = require('xlsx');
 
 router.get("/", async (ctx) => {
     let page = ctx.query.page || 1;
@@ -89,6 +91,121 @@ router.post('/M100-doedit', async (ctx) => {
     } catch (e) {
         ctx.body = "修改失败";
     }
+});
+
+//下载报表
+router.get("/M100-download", async (ctx) => {
+    const _headers = ['学号', '姓名', '班级', '比赛编号', "比赛分组", "比赛赛道", "比赛成绩", "比赛排名", "比赛记录"];
+    const _data = [];
+    let result = await DB.find("users", {"sys_user": 0, "sex": "男", "bm_state": parseInt(1), "pro_type": "M100"}, {}, {
+        page: parseInt(1),
+        pageSize: parseInt(1500),
+        sortJson: {"user_score": 1}
+    });
+    for (i = 0; i < result.length; i++) {
+        let stu_id_update = result[i].stu_id;
+        let addjson = {};
+        addjson["学号"] = result[i].stu_id;
+        addjson["姓名"] = result[i].name;
+        addjson["班级"] = result[i].class;
+        addjson["比赛编号"] = result[i].pro_id;
+        addjson["比赛分组"] = result[i].pro_name;
+        addjson["比赛赛道"] = result[i].pro_num;//比赛赛道
+        addjson["比赛成绩"] = result[i].user_score;
+        addjson["比赛排名"] = i + 1;
+        addjson["比赛记录"] = result[i].user_record;
+        _data.push(addjson);
+        let updateResult = await DB.update('users', {"stu_id": stu_id_update}, {
+            "user_paiming": i + 1,
+        });
+    }
+
+    const dlXlsx = () => {
+        const headers = _headers
+            .map((v, i) => Object.assign({}, {v: v, position: String.fromCharCode(65 + i) + 1}))
+            // 为 _headers 添加对应的单元格位置
+            // [ { v: 'id', position: 'A1' },
+            //   { v: 'name', position: 'B1' },
+            //   { v: 'age', position: 'C1' },
+            //   { v: 'country', position: 'D1' },
+            .reduce((prev, next) => Object.assign({}, prev, {[next.position]: {v: next.v}}), {});
+        // 转换成 worksheet 需要的结构
+        // { A1: { v: 'id' },
+        //   B1: { v: 'name' },
+        //   C1: { v: 'age' },
+        //   D1: { v: 'country' },
+
+        const data = _data
+            .map((v, i) => _headers.map((k, j) => Object.assign({}, {
+                v: v[k],
+                position: String.fromCharCode(65 + j) + (i + 2)
+            })))
+            // 匹配 headers 的位置，生成对应的单元格数据
+            // [ [ { v: '1', position: 'A2' },
+            //     { v: 'test1', position: 'B2' },
+            //     { v: '30', position: 'C2' },
+            //     { v: 'China', position: 'D2' }],
+            //   [ { v: '2', position: 'A3' },
+            //     { v: 'test2', position: 'B3' },
+            //     { v: '20', position: 'C3' },
+            //     { v: 'America', position: 'D3' }],
+            //   [ { v: '3', position: 'A4' },
+            //     { v: 'test3', position: 'B4' },
+            //     { v: '18', position: 'C4' },
+            //     { v: 'Unkonw', position: 'D4' }] ]
+            .reduce((prev, next) => prev.concat(next))
+            // 对刚才的结果进行降维处理（二维数组变成一维数组）
+            // [ { v: '1', position: 'A2' },
+            //   { v: 'test1', position: 'B2' },
+            //   { v: '30', position: 'C2' },
+            //   { v: 'China', position: 'D2' },
+            //   { v: '2', position: 'A3' },
+            //   { v: 'test2', position: 'B3' },
+            //   { v: '20', position: 'C3' },
+            //   { v: 'America', position: 'D3' },
+            //   { v: '3', position: 'A4' },
+            //   { v: 'test3', position: 'B4' },
+            //   { v: '18', position: 'C4' },
+            //   { v: 'Unkonw', position: 'D4' },
+            .reduce((prev, next) => Object.assign({}, prev, {[next.position]: {v: next.v}}), {});
+        // 转换成 worksheet 需要的结构
+        //   { A2: { v: '1' },
+        //     B2: { v: 'test1' },
+        //     C2: { v: '30' },
+        //     D2: { v: 'China' },
+        //     A3: { v: '2' },
+        //     B3: { v: 'test2' },
+        //     C3: { v: '20' },
+        //     D3: { v: 'America' },
+        //     A4: { v: '3' },
+        //     B4: { v: 'test3' },
+        //     C4: { v: '18' },
+        //     D4: { v: 'Unkonw' }
+        // 合并 headers 和 data
+        const output = Object.assign({}, headers, data);
+        // 获取所有单元格的位置
+        const outputPos = Object.keys(output);
+        // 计算出范围
+        const ref = outputPos[0] + ':' + outputPos[outputPos.length - 1];
+
+        // 构建 workbook 对象
+        const workbook = {
+            SheetNames: ['女子100米'],
+            Sheets: {
+                '女子100米': Object.assign({}, output, {'!ref': ref})
+            }
+        };
+
+        // 导出 Excel
+        XLSX.writeFile(workbook, '男子100米.xlsx')
+    }
+    await dlXlsx();
+    //类型
+    ctx.type = '.xlsx';
+    //请求返回，生成的xlsx文件
+    ctx.body = fs.readFileSync('男子100米.xlsx');
+    //请求返回后，删除生成的xlsx文件，不删除也行，下次请求回覆盖
+    fs.unlink('男子100米.xlsx');
 });
 
 module.exports = router.routes();
